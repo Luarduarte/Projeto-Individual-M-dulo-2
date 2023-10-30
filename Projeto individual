@@ -1,0 +1,67 @@
+entrevistados = []
+compatibilidade = [] 
+resultado =[] 
+
+def inicio():
+    print('\n(1) Cadastro do entrevistado'
+    '\n(2) Análise de compatibilidade'
+    '\n(3) Encerrar')
+    escolha = int(input('Escolher uma das opções abaixo: '))
+    if escolha == 1:
+        cadastrar()
+    elif escolha == 2:
+        verificação()
+    elif escolha == 3:
+        sair()
+    
+def cadastrar():
+    nome = input('Nome do candidato: ')
+    entrevista = float(input('Nota da entrevista: '))
+    teorico = float(input('Nota do teste teórico: '))
+    pratico = float(input('Nota do teste prático: '))
+    skill = float(input('Nota da avaliação de soft skills: '))
+    pontostotal = str(f'e{entrevista}_t{teorico}_p{pratico}_s{skill}')
+    verificar = (nome, pontostotal)
+    entrevistados.append(verificar)
+
+
+    print('\n(1) Novo cadastro'
+          '\n(2) Retornar '
+          '\n(3) Encerrar  ')
+
+    op = int(input('Escolha uma opção: '))
+    if op == 1:
+        cadastrar()
+    elif op == 2:
+        inicio()
+    elif op == 3:
+        sair()
+
+def verificação():
+    print('Insira as notas de corte: \n')
+    ecorte = float(input('Entrevista: '))
+    tcorte = float(input('Teste teórico: '))
+    pcorte = float(input('Teste prático: '))
+    scorte = float(input('Avaliação de soft skills: '))
+
+    for i in range(len(entrevistados)):
+        eindex = entrevistados[i][1].index('e')
+        tindex = entrevistados[i][1].index('t')
+        pindex = entrevistados[i][1].index('p')
+        sindex = entrevistados[i][1].index('s')
+
+        ei = float(entrevistados[i][1][eindex+1:tindex-1])
+        ti = float(entrevistados[i][1][tindex+1:pindex-1])
+        pi = float(entrevistados[i][1][pindex+1:sindex-1])
+        si = float(entrevistados[i][1][sindex+1:])
+
+        if ei >= ecorte and ti >= tcorte and pi >= pcorte and si >= scorte:
+            resultado.append(entrevistados[i][0])
+
+    for i in resultado:
+        print(f'{i} foi o candidato com melhor desempenho.')
+
+def sair():
+    print('Concluído!')
+
+inicio()
